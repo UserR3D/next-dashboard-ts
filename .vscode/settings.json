@@ -1,0 +1,14 @@
+{
+    "prisma.pinToPrisma6": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        ".next": true,
+        "node_modules": true,
+        ".vscode": true,
+        "app/generated": true
+    }
+}
