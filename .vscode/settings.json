@@ -9,6 +9,6 @@
         ".next": true,
         "node_modules": true,
         ".vscode": true,
-        "generated": true
+        "**/generated": true
     }
 }
