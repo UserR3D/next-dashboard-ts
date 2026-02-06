@@ -13,12 +13,8 @@ export async function GET() {
 export async function POST(request: NextRequest){
   const {email, name, password} = await request.json() as UserNextApi
   const passwordHash = bcrypt.hashSync(password, 10)
-  const users = await serviceAddUser(email, passwordHash, name)
-  try{
-  return NextResponse.json(users, {
-    status: 200, 
-    headers: { 'Content-Type': 'application/json' }})
-  }catch(err){
-    return NextResponse.json(err, {status: 500,})
-  }
+  const users = await serviceAddUser(email, passwordHash, name ?? '')
+  return new NextResponse(JSON.stringify(users), {status: users.status})
 }
+
+

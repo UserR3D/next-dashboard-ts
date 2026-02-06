@@ -1,5 +1,11 @@
 interface UserNextApi {
+    id: number,
     email: string,
     password: string
-    name?: string,
+    name?: string | undefined | null,
+}
+
+interface ErrorApi {
+    error?: string,
+    message?: string
 }
