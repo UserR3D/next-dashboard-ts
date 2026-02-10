@@ -2,7 +2,7 @@ import { prisma } from "@/app/lib/prisma";
 import handleServer from "@/app/lib/serverHandling";
 
 export async function serviceGetUsers(){
-    return handleServer(await prisma.user.findMany(), 200)
+    return await prisma.user.findMany()
 }
 
 export async function serviceAddUser(email : string, passwordHash : string, name? : string) {

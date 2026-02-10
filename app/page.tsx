@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { serviceGetUsers } from "./api/users/services/service_user";
+import { serviceGetUsers } from "./api/services/service_user";
 
 export default async function Home() {
   const users = await serviceGetUsers();

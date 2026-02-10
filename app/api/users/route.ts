@@ -1,9 +1,10 @@
 import { NextRequest } from "next/server";
-import { serviceAddUser, serviceGetUsers } from "./services/service_user";
 import bcrypt from "bcryptjs";
+import { serviceAddUser, serviceGetUsers } from "../services/service_user";
+import handleServer from "@/app/lib/serverHandling";
 
 export async function GET() {
-  return await serviceGetUsers();
+  return handleServer(await serviceGetUsers(), 200);
 }
 
 export async function POST(request: NextRequest){
