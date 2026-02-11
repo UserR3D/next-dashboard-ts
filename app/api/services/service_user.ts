@@ -22,3 +22,14 @@ export async function serviceAddUser(email : string, passwordHash : string, name
     return createdUser
 }
 
+
+export async function serviceDelete(id: number){
+    const primsaFind = await prisma.user.findUnique({where: {id} })
+    if(!primsaFind){
+        return handleServer({error: "ID don`t exist", message: "User don`t exists in database",}, 400)
+    }
+   const deleteUSer = await prisma.user.delete({
+        where: {id}
+    })
+    return handleServer(deleteUSer, 200)
+}

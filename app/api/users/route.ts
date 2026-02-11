@@ -12,5 +12,3 @@ export async function POST(request: NextRequest){
   const passwordHash = bcrypt.hashSync(password, 10)
   return await serviceAddUser(email, passwordHash, name ?? '')
 }
-
-

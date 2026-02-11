@@ -9,3 +9,7 @@ interface ErrorApi {
     error?: string,
     message?: string
 }
+
+interface RouteParams {
+  params: Promise<{ id: string }>;
+}
