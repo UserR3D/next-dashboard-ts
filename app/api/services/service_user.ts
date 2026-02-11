@@ -1,5 +1,5 @@
 import { prisma } from "@/app/lib/prisma";
-import handleServer from "@/app/lib/serverHandling";
+import {handleServer} from "@/app/lib/serverHandling";
 
 export async function serviceGetUsers(){
     return await prisma.user.findMany()
@@ -26,10 +26,19 @@ export async function serviceAddUser(email : string, passwordHash : string, name
 export async function serviceDelete(id: number){
     const primsaFind = await prisma.user.findUnique({where: {id} })
     if(!primsaFind){
-        return handleServer({error: "ID don`t exist", message: "User don`t exists in database",}, 400)
+        return handleServer({error: "ID don't exist", message: "User don`t exists in database"}, 400)
     }
    const deleteUSer = await prisma.user.delete({
         where: {id}
     })
     return handleServer(deleteUSer, 200)
+}
+
+export async function serviceUpdate(id: number, password: string, name?: string,){
+    const prismaFind = await prisma.user.findUnique({where: {id}})
+    if(!prismaFind){
+        return handleServer({error: "ID don't exist", message: "User don`t exists in database"}, 400)
+    }
+    const updateUser = await prisma.user.update({where: {id}, data: {name, password}})
+    return updateUser
 }
