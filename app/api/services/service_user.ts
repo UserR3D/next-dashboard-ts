@@ -7,12 +7,11 @@ export async function serviceGetUsers(){
 
 export async function serviceAddUser(email : string, passwordHash : string, name? : string) {
     const existingEmail = await prisma.user.findUnique({where: {email}})
-    
     if(existingEmail){
         const errorEmail = handleServer<ErrorApi>({error: "Conflict", message: "Email already exists"}, 409)
         return errorEmail
     }
-    const createdUser = handleServer<UserNextApi>( await prisma.user.create({
+    const createdUser = handleServer<UserNextApi>(await prisma.user.create({
         data: {
             email,
             password: passwordHash,
@@ -22,19 +21,16 @@ export async function serviceAddUser(email : string, passwordHash : string, name
     return createdUser
 }
 
-
 export async function serviceDelete(id: number){
-    const primsaFind = await prisma.user.findUnique({where: {id} })
-    if(!primsaFind){
+    const prismaFind = await prisma.user.findUnique({where: {id} })
+    if(!prismaFind){
         return handleServer({error: "ID don't exist", message: "User don`t exists in database"}, 400)
     }
-   const deleteUSer = await prisma.user.delete({
-        where: {id}
-    })
-    return handleServer(deleteUSer, 200)
+   const deleteUser = await prisma.user.delete({where: {id}})
+    return handleServer(deleteUser, 200)
 }
 
-export async function serviceUpdate(id: number, password: string, name?: string,){
+export async function serviceUpdate(id: number, password: string, name?: string){
     const prismaFind = await prisma.user.findUnique({where: {id}})
     if(!prismaFind){
         return handleServer({error: "ID don't exist", message: "User don`t exists in database"}, 400)

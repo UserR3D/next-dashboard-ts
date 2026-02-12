@@ -8,4 +8,3 @@ export type serverResponse  = {
 export function handleServer<T>(data: T, status: number) {
     return new NextResponse(JSON.stringify(data), {status: status, headers: { 'Content-Type': 'application/json' }})
 }
-

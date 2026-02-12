@@ -1,14 +1,14 @@
 import { NextRequest, } from 'next/server';
 import { serviceDelete, serviceUpdate } from '../../services/service_user';
-import bcrypt from "bcryptjs";
 import { handleServer } from '@/app/lib/serverHandling';
+import bcrypt from "bcryptjs";
 
 interface RouteParams {
   params: Promise<{ id: string }>;
 }
 
-export async function DELETE({ params }: RouteParams) {
-  const { id } = await params;
+export async function DELETE(request: NextRequest,{ params }: RouteParams) {
+  const {id} = await params;
   return await serviceDelete(+id)
 }
 
