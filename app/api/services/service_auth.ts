@@ -5,10 +5,11 @@ import bcrypt from "bcryptjs";
 export async function serviceAuth(email: string, password: string){
     const user = await prisma.user.findUnique({where: {email}})
     const isMatch = user && (await bcrypt.compare(password, user.password))
-    if(!user || !isMatch) handleServer({error: "Invalid inputs", message: "Email or password wrong"}, 400)
+    if(!user || !isMatch) handleServer({error: "Invalid inputs", message: "Email or password wrong"}, 401)
     const payload = {
         id: user?.id,
-        email: user?.email
+        email: user?.email,
+        name: user?.name
     }
     return {user, isMatch, payload}
 }
