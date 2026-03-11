@@ -21,7 +21,7 @@ export async function serviceAddUser(email : string, passwordHash : string, name
     return createdUser
 }
 
-export async function serviceDelete(id: number){
+export async function serviceDelete(id: string){
     const prismaFind = await prisma.user.findUnique({where: {id} })
     if(!prismaFind){
         return handleServer({error: "ID don't exist", message: "User don`t exists in database"}, 400)
@@ -30,7 +30,7 @@ export async function serviceDelete(id: number){
     return handleServer(deleteUser, 200)
 }
 
-export async function serviceUpdate(id: number, password: string, name?: string){
+export async function serviceUpdate(id: string, password: string, name?: string){
     const prismaFind = await prisma.user.findUnique({where: {id}})
     if(!prismaFind){
         return handleServer({error: "ID don't exist", message: "User don`t exists in database"}, 400)

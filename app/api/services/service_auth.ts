@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function serviceAuth(email: string, password: string){
     const user = await prisma.user.findUnique({where: {email}})
-    const isMatch = user && (await bcrypt.compare(password, user.password))
+    const isMatch = user && (await bcrypt.compare(password, user.password!))
     if(!user || !isMatch) {
         const errorEmail = handleServer<ErrorApi>({error: "Invalid inputs", message: "Email or password wrong"}, 400)
         return errorEmail

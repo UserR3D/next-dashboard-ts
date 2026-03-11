@@ -9,13 +9,14 @@ interface RouteParams {
 
 export async function DELETE(request: NextRequest,{ params }: RouteParams) {
   const {id} = await params;
-  return await serviceDelete(+id)
+  return await serviceDelete(id)
 }
 
 export async function PUT(request: NextRequest, {params} : RouteParams){
   const {id} = await params;
   const {name, password} = await request.json() as UserNextApi;
+  if(!password || name) return handleServer<ErrorApi>({error: "Invalid Credentials", message: "Name or password incorrectly"}, 400) 
   const passwordHash = bcrypt.hashSync(password, 10)
-  const updateUser = await serviceUpdate(+id, passwordHash, name ?? "",);
+  const updateUser = await serviceUpdate(id, passwordHash, name ?? "",);
   return handleServer(updateUser, 200)
 }
