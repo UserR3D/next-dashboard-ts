@@ -1,13 +1,10 @@
 "use client"
-import { getServerSession } from "next-auth";
-import { SessionProvider, signIn, signOut, useSession } from "next-auth/react";
-import { authOptions } from "../lib/auth";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Home(){
   const { data: session } = useSession()
     return(
         <div>
-            <SessionProvider session={session}>
             <button
             onClick={() => signIn()}
             className="px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition">
@@ -25,7 +22,6 @@ export default function Home(){
             <h1>{session?.user?.email}</h1>
             <h1>{session?.user?.name}</h1>
             <h1>{session?.user?.image}</h1>
-            </SessionProvider>
         </div>
     )
 }
