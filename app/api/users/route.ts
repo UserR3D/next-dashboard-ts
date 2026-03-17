@@ -1,16 +1,16 @@
-import { serviceUser } from "./services/service_user";
+import { NextRequest } from "next/server";
+import bcrypt from "bcryptjs";
+import { serviceAddUser, serviceGetUsers } from "../services/service_user";
+import {handleServer} from "@/app/lib/serverHandling";
 
-export async function GET(request: Request) {
-  // For example, fetch data from your DB here
-  // const users = [
-  //   { id: 1, name: 'Alice' },
-  //   { id: 2, name: 'Bob' },
-  // ];
-  
-  const users = await serviceUser();
-
-  return new Response(JSON.stringify(users), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' }
-  });
+export async function GET() {
+  return handleServer(await serviceGetUsers(), 200);
 }
+
+export async function POST(request: NextRequest){
+  const {email, name, password} = await request.json() as UserNextApi
+  if(!password || !email) return handleServer<ErrorApi>({error: "Invalid Credentials", message: "Email or password incorrectly"}, 400)
+  const passwordHash = bcrypt.hashSync(password, 10)
+  return await serviceAddUser(email, passwordHash, name ?? '')
+}
+
