@@ -1,13 +1,15 @@
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
+  runtime  = "vercel-edge"
+  
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-model User {
+model User { 
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
@@ -18,12 +20,12 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
-  posts         Post[]
-}
-
+  posts          Post[]
+} 
 model Post {
-  id          Int     @id @default(autoincrement())
-  title       String
+  id        String   @id @default(cuid())
+  title     String
+  createdAt DateTime @default(now())
   img_name    String?
   img_data    String?
   description String?

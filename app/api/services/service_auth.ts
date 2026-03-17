@@ -20,6 +20,7 @@ export async function serviceAuth(email: string, password: string){
     token: payload,
     secret: process.env.AUTH_SECRET!
   })
+
     const res = NextResponse.json(payload)
     res.cookies.set("next-auth.session-token", token, {
     httpOnly: true,

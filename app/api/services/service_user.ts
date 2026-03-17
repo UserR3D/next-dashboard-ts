@@ -30,11 +30,11 @@ export async function serviceDelete(id: string){
     return handleServer(deleteUser, 200)
 }
 
-export async function serviceUpdate(id: string, password: string, name?: string){
+export async function serviceUpdate(id: string, password?: string, name?: string, email?: string){
     const prismaFind = await prisma.user.findUnique({where: {id}})
     if(!prismaFind){
         return handleServer({error: "ID don't exist", message: "User don`t exists in database"}, 400)
     }
-    const updateUser = await prisma.user.update({where: {id}, data: {name, password}})
+    const updateUser = await prisma.user.update({where: {id}, data: {name, password, email}})
     return updateUser
 }

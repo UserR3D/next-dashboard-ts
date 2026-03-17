@@ -14,9 +14,9 @@ export async function DELETE(request: NextRequest,{ params }: RouteParams) {
 
 export async function PUT(request: NextRequest, {params} : RouteParams){
   const {id} = await params;
-  const {name, password} = await request.json() as UserNextApi;
-  if(!password || name) return handleServer<ErrorApi>({error: "Invalid Credentials", message: "Name or password incorrectly"}, 400) 
+  const {email, name, password} = await request.json() as UserNextApi;
+  if(!password) return handleServer<ErrorApi>({error: "Invalid Credentials", message: "Name or password incorrectly"}, 400) 
   const passwordHash = bcrypt.hashSync(password, 10)
-  const updateUser = await serviceUpdate(id, passwordHash, name ?? "",);
+  const updateUser = await serviceUpdate(id, passwordHash ?? null, name ?? "", email ?? "");
   return handleServer(updateUser, 200)
 }
