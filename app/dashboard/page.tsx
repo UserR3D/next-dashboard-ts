@@ -15,10 +15,6 @@ export default function Home(){
             className="px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition">
             LogOut
             </button>
-            <button
-            onClick={() => signIn("credentials")}>
-            Login normal
-            </button>
             <h1>{session?.user?.email}</h1>
             <h1>{session?.user?.name}</h1>
             <h1>{session?.user?.image}</h1>

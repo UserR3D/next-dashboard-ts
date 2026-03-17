@@ -1,4 +1,4 @@
-import { serviceAuth } from "../services/service_auth"
+import { serviceAuth } from "../services/serviceAuth"
 
 export async function POST(req: Request) {
   const { email, password } = await req.json()

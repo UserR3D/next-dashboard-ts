@@ -1,5 +1,5 @@
 import { NextRequest, } from 'next/server';
-import { serviceDelete, serviceUpdate } from '../../services/service_user';
+import { serviceDelete, serviceUpdate } from '../../services/serviceUser';
 import { handleServer } from '@/app/lib/serverHandling';
 import bcrypt from "bcryptjs";
 

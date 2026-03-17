@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
-import { serviceAddUser, serviceGetUsers } from "../services/service_user";
+import { serviceAddUser, serviceGetUsers } from "../services/serviceUser";
 import {handleServer} from "@/app/lib/serverHandling";
 
 export async function GET() {
