@@ -1,9 +1,17 @@
 type UserNextApi = {
   id: string
-  email: string | null
   name: string | null
+  email: string | null
   password: string | null
 }
+
+interface UserResponseApi extends UserNextApi{
+  emailVerified: string | null,
+  image: string | null
+  createdAt: Date
+  updatedAt: Date
+}
+
 interface ErrorApi {
     error?: string,
     message?: string

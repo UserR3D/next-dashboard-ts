@@ -19,7 +19,8 @@
     "next-auth": "^4.24.13",
     "pg": "^8.20.0",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "vercel": "^50.34.2"
   },
   "devDependencies": {
     "@prisma/client": "^5.22.0",
