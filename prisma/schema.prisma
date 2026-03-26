@@ -16,6 +16,7 @@ model User {
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  customImage   Image?
   accounts      Account[]
   sessions      Session[]
   posts          Post[]
@@ -73,4 +74,16 @@ model VerificationRequest {
   updatedAt  DateTime @updatedAt
 
   @@unique([identifier, token])
+}
+
+model Image {
+  id       String @default(cuid()) @id
+  publicId String @unique
+  format   String?
+  version  Int
+  url      String
+  createdAt DateTime @default(now())
+  userId   String @unique
+
+  user User @relation(fields: [userId], references: [id])
 }

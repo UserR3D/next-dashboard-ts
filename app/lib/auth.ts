@@ -10,6 +10,9 @@ if (!process.env.AUTH_GITHUB_ID|| !process.env.AUTH_GITHUB_SECRET) {
   throw new Error("Missing GitHub OAuth environment variables")
 }
 
+
+
+
 export const authOptions : NextAuthOptions = {
     providers: [
         Credentials({
@@ -29,7 +32,8 @@ export const authOptions : NextAuthOptions = {
                 return {
                     id: user.id,
                     email: user.email,
-                    name: user.name
+                    name: user.name,
+                    image: user.image,
                 }
             }
         }),
@@ -40,6 +44,30 @@ export const authOptions : NextAuthOptions = {
     ],
     session: {
         strategy: "jwt",
+    },
+    callbacks: {
+        async jwt({token, user}){
+            if(user) {token.id = user.id}
+            if(token.id){
+            const dbUser = await prisma.user.findUnique({
+                where: { id: token.id as string },
+                    include: {
+                        customImage: true
+                    }
+                })
+                if(dbUser?.customImage){
+                    token.picture = dbUser.customImage.url ?? dbUser.image;
+                }
+            }
+            return token
+        },
+        async session({session, token}){
+            if(token){
+                session.user.id = token.id as string
+                session.user.image = token.picture as string
+            }
+            return session
+        }
     },
     adapter: PrismaAdapter(prisma)
 }

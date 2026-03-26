@@ -7,16 +7,19 @@ type ErrorAdd = {
     message: string,
 }
 
-
 export default function Page(){
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [name, setName] = React.useState("");
-    const [results, setResults] = React.useState<UserResponseApi | undefined>(undefined);
-    const [error, setError] = React.useState<ErrorAdd | undefined>(undefined);
-    async function addUser(e: React.ChangeEvent){
+    const [file, setFile] = React.useState<File | null>(null);
+
+    const [results, setResults] = React.useState<any>();
+    const [error, setError] = React.useState<ErrorAdd>();
+
+    async function addUser(e: React.SubmitEvent <HTMLFormElement>){
         e.preventDefault()
         setError(undefined)
+
         const response = await fetch("/api/users/", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -24,39 +27,93 @@ export default function Page(){
                 email, name, password
             })
         })
-        if(!response.ok) return setError(await response.json())
-       return setResults(await response.json() as UserResponseApi)
+
+        const data = await response.json()
+
+        if(!response.ok) return setError(data)
+        return setResults(data)
+    }
+
+    async function uploadImage(){
+        if (!file) return null
+
+        const formData = new FormData()
+        formData.append("image", file)
+
+        const response = await fetch("/api/upload", {
+            method: "POST",
+            body: formData
+        })
+
+        const data = await response.json()
+
+        if(!response.ok){
+            return setError(data)
+        }
+
+        alert("Imagem enviada com sucesso 🚀")
     }
 
     return (
-    <form onSubmit={addUser} method="POST">
-        <label>
-            Name
-            <input name="submitted-name" autoComplete="name" type="text" className="border" onChange={(e) =>
-                setName(e.currentTarget.value)
-            }/>
-        </label>
-        <label>
-            Email
-            <input name="submitted-email" autoComplete="email" type="email" className="border" onChange={(e) => 
-                setEmail(e.currentTarget.value)
-            }/>
-        </label>
-        <label>
-            Password
-            <input name="submitted-password" autoComplete="password" type="password" className="border" onChange={(e) => 
-                setPassword(e.currentTarget.value)
-            }/>
-        </label>
-        <button>Register</button>
-        {error ? <div>
-            <p>{error.error}</p>
-            <p>{error.message}</p>
-            </div> : ""}
-        {results ? <div>
-            <p>Sucess</p>
-            <p>User created with sucess</p>
-        </div> : ""}
-    </form>
+    <div>
+        {/* FORM DE REGISTER */}
+        <form onSubmit={addUser}>   
+            <label>
+                Name
+                <input type="text" className="border"
+                    onChange={(e) => setName(e.currentTarget.value)}
+                />
+            </label>
+
+            <label>
+                Email
+                <input type="email" className="border"
+                    onChange={(e) => setEmail(e.currentTarget.value)}
+                />
+            </label>
+
+            <label>
+                Password
+                <input type="password" className="border"
+                    onChange={(e) => setPassword(e.currentTarget.value)}
+                />
+            </label>
+
+            <button type="submit">Register</button>
+        </form>
+
+        {/* UPLOAD DE IMAGEM */}
+        <div className="mt-4">
+            <input 
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                    if (e.target.files?.[0]) {
+                        setFile(e.target.files[0])
+                    }
+                }}
+            />
+
+            <button onClick={uploadImage}>
+                Upload Image
+            </button>
+        </div>
+
+        {/* ERRO */}
+        {error && (
+            <div>
+                <p>{error.error}</p>
+                <p>{error.message}</p>
+            </div>
+        )}
+
+        {/* SUCESSO */}
+        {results && (
+            <div>
+                <p>Success</p>
+                <p>User created successfully</p>
+            </div>
+        )}
+    </div>
     )
 }

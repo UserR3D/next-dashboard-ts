@@ -17,7 +17,7 @@ export async function serviceAddUser(email : string, password : string, name? : 
         data: {
             email,
             password: passwordHash,
-            name
+            name, 
         }
     }), 200)
     return createdUser
