@@ -13,7 +13,7 @@ export default function Page(){
     const [name, setName] = React.useState("");
     const [file, setFile] = React.useState<File | null>(null);
 
-    const [results, setResults] = React.useState<any>();
+    const [results, setResults] = React.useState<UserNextApi | undefined>(undefined);
     const [error, setError] = React.useState<ErrorAdd>();
 
     async function addUser(e: React.SubmitEvent <HTMLFormElement>){

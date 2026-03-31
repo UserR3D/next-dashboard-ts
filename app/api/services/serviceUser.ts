@@ -3,7 +3,7 @@ import {handleServer} from "@/app/lib/serverHandling";
 import bcrypt from "bcryptjs";
 
 export async function serviceGetUsers(){
-    return await prisma.user.findMany()
+    return await prisma.user.findMany({include: {customImage: true}})
 }
 
 export async function serviceAddUser(email : string, password : string, name? : string) {
