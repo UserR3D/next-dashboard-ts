@@ -1,7 +1,7 @@
 import { NextRequest, } from 'next/server';
 import { serviceDelete, serviceUpdate } from '../../services/serviceUser';
-import { handleServer } from '@/app/lib/serverHandling';
 import bcrypt from "bcryptjs";
+import { handleServer } from '@/lib/serverHandling';
 
 interface RouteParams {
   params: Promise<{ id: string }>;

@@ -1,7 +1,7 @@
-import { authOptions } from "@/app/lib/auth";
 import { getServerSession } from "next-auth";
 import { serviceCloud } from "../services/serviceCloud";
-import { uploadFileImage } from "@/app/lib/uploaderCloud";
+import { authOptions } from "@/lib/auth";
+import { uploadFileImage } from "@/lib/uploaderCloud";
 
 export async function POST(req: Request){
     const session = await getServerSession(authOptions);

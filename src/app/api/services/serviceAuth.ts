@@ -1,5 +1,5 @@
-import { prisma } from "@/app/lib/prisma";
-import { handleServer } from "@/app/lib/serverHandling";
+import { prisma } from "@/lib/prisma";
+import { handleServer } from "@/lib/serverHandling";
 import bcrypt from "bcryptjs";
 import { encode } from "next-auth/jwt";
 import { NextResponse } from "next/server";

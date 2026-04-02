@@ -1,5 +1,5 @@
-import { prisma } from "@/app/lib/prisma";
-import {handleServer} from "@/app/lib/serverHandling";
+import { prisma } from "@/lib/prisma";
+import { handleServer } from "@/lib/serverHandling";
 import bcrypt from "bcryptjs";
 
 export async function serviceGetUsers(){

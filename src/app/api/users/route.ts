@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { serviceAddUser, serviceGetUsers } from "../services/serviceUser";
-import {handleServer} from "@/app/lib/serverHandling";
+import { handleServer } from "@/lib/serverHandling";
 
 export async function GET() {
   return handleServer(await serviceGetUsers(), 200);
