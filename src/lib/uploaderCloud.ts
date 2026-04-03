@@ -5,7 +5,7 @@ export async function uploadFileImage(buffer: Buffer<ArrayBuffer>) {
 	return await new Promise<UploadApiResponse>((resolve, reject) => {
 		cloudinary.uploader
 			.upload_stream(
-				{ folder: 'uesrs', resource_type: 'auto' },
+				{ folder: 'users', resource_type: 'auto' },
 				(error, uploadResult) => {
 					if (error) {
 						return reject(error);

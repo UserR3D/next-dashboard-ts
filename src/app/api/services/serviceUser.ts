@@ -26,6 +26,13 @@ export async function serviceAddUser(
 				email,
 				password: passwordHash,
 				name,
+				customImage: {
+					create: {
+						url: 'https://res.cloudinary.com/dncualhsd/image/upload/v1775234853/user_azv4fl.png',
+						publicId: `${email}_${Math.random().toString(36).substring(2, 12)}`,
+						version: 1,
+					},
+				},
 			},
 		}),
 		200,
