@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
 	title: 'Vercel - NextJS + Prisma',
-	icons: '/public/vercel.svg',
+	icons: '/vercel.svg',
 };
 
 export default async function RootLayout({

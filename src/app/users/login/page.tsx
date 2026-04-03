@@ -21,7 +21,6 @@ export default function Page() {
 			password,
 			redirect: false,
 		});
-		console.log(result);
 		if (result?.error) {
 			setError(result.error);
 		} else {

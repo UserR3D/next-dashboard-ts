@@ -3,7 +3,7 @@
 export default async function Home() {
 	return (
 		<main>
-			<h1>teste</h1>
+			<h1>TEstandop</h1>
 		</main>
 	);
 }

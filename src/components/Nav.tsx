@@ -7,9 +7,9 @@ export const Nav = () => {
 	const { data: session } = useSession();
 
 	return (
-		<nav>
+		<nav className="grid justify-right">
 			{!session ? (
-				<ul>
+				<ul className="flex ">
 					<li>
 						<a href="/users/register">Register</a>
 					</li>
@@ -27,14 +27,18 @@ export const Nav = () => {
 					</li>
 				</ul>
 			) : (
-				<ul>
+				<ul className="flex">
 					<li>
 						<h2>{session.user.name}</h2>
+					</li>
+					<li>
 						<Image
 							alt="User profile"
 							src={session.user.image!}
-							width={40}
-							height={40}
+							width={60}
+							height={60}
+							loading="eager"
+							style={{ width: 'auto', height: 'auto' }}
 						/>
 					</li>
 					<li>
