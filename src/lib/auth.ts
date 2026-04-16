@@ -15,6 +15,7 @@ if (!process.env.AUTH_GITHUB_ID || !process.env.AUTH_GITHUB_SECRET) {
 }
 
 export const authOptions: NextAuthOptions = {
+	adapter: PrismaAdapter(prisma),
 	providers: [
 		Credentials({
 			name: 'Credentials',
@@ -54,7 +55,16 @@ export const authOptions: NextAuthOptions = {
 	callbacks: {
 		async jwt({ token, user }) {
 			if (user) {
-				token.id = user.id;
+				const dbUser = await prisma.user.upsert({
+					where: { email: user.email! },
+					update: {},
+					create: {
+						email: user.email!,
+						name: user.name,
+						image: user.image,
+					},
+				});
+				token.id = dbUser.id;
 			}
 			if (token.id) {
 				const dbUser = await prisma.user.findUnique({
@@ -77,7 +87,6 @@ export const authOptions: NextAuthOptions = {
 			return session;
 		},
 	},
-	adapter: PrismaAdapter(prisma),
 	pages: {
 		signIn: '/users/login',
 	},

@@ -20,8 +20,10 @@ model User {
   customImage   Image?
   accounts      Account[]
   sessions      Session[]
-  posts          Post[]
+  posts         Post[]
+  messages      Message[]
 } 
+
 model Post {
   id        String   @id @default(cuid())
   title     String
@@ -87,4 +89,13 @@ model Image {
   userId   String @unique
 
   user User @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  @@map("message")
 }

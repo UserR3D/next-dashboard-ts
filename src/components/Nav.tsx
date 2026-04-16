@@ -31,16 +31,20 @@ export const Nav = () => {
 					<li>
 						<h2>{session.user.name}</h2>
 					</li>
-					<li>
-						<Image
-							alt="User profile"
-							src={session.user.image!}
-							width={60}
-							height={60}
-							loading="eager"
-							style={{ width: 'auto', height: 'auto' }}
-						/>
-					</li>
+					{session.user.image ? (
+						<li>
+							<Image
+								alt="User profile"
+								src={session.user.image}
+								width={60}
+								height={60}
+								loading="eager"
+								style={{ width: 'auto', height: 'auto' }}
+							/>
+						</li>
+					) : (
+						''
+					)}
 					<li>
 						<a
 							onClick={(e) => {
