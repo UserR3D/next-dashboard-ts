@@ -1,9 +1,11 @@
 'use server';
 
+import { Chat } from '@/components/Chat';
+
 export default async function Home() {
 	return (
 		<main>
-			<h1>TEstandop</h1>
+			<Chat />
 		</main>
 	);
 }
