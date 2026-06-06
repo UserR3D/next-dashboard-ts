@@ -1,22 +1,31 @@
 'use client';
 
-import { useRealTimeChat } from '@/hooks/use-realtime-chat';
+import { useQueryData } from '@/hooks/useQueryData';
+import { useRealTimeChat } from '@/hooks/useRealtimeChat';
 import { useSession } from 'next-auth/react';
 import React from 'react';
 
 export const Chat = () => {
 	const { data: session } = useSession();
-	const [content, setContent] = React.useState('');
 	const { messages, sendMessages, isConnected } = useRealTimeChat('teste-room');
+	const { newMessages } = useQueryData();
+	const cachedMessages = React.useMemo(() => {
+		const mergedMessages = [...(newMessages ?? []), ...messages];
+		return mergedMessages;
+	}, [messages, newMessages]);
+	const [content, setContent] = React.useState('');
+
 	if (!isConnected) return <p>Connection failed</p>;
+
 	return (
 		<div>
-			{messages.length === 0 ? <div>No messages found yet</div> : null}
-			{messages.map((message, index) => {
+			{cachedMessages.length === 0 ? <div>No messages found yet</div> : null}
+			{cachedMessages.map((message, index) => {
 				return (
 					<ul key={index}>
 						<li>{message.content}</li>
 						<li>{message.id}</li>
+						<li></li>
 					</ul>
 				);
 			})}
@@ -27,9 +36,9 @@ export const Chat = () => {
 				type="text"
 			/>
 			<button
-				onClick={async (e) => {
+				onClick={(e) => {
 					e.preventDefault();
-					await sendMessages(content, session?.user.name ?? 'Anonymous');
+					sendMessages(content, session?.user.name ?? 'Anonymous');
 				}}
 			>
 				Butao
