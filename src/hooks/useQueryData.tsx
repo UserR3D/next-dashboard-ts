@@ -10,7 +10,7 @@ export const useQueryData = () => {
 		async function storedMessages() {
 			const { data, error } = await supabase
 				.from('message')
-				.select('*, "User" (name, email)');
+				.select('*, "user" (name, email)');
 			if (error) {
 				console.error(error.message);
 			}

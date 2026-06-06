@@ -8,51 +8,34 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model User { 
-  id            String    @id @default(cuid())
-  name          String?   @unique
-  email         String?   @unique
-  password      String?
-  emailVerified DateTime?
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  customImage   Image?
-  accounts      Account[]
-  sessions      Session[]
-  posts         Post[]
-  messages      Message[]
-} 
-
 model Post {
-  id        String   @id @default(cuid())
-  title     String
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  title       String
+  createdAt   DateTime @default(now())
   img_name    String?
   img_data    String?
   description String?
-  published   Boolean @default(false)
-  view_p      Int     @default(0)
+  published   Boolean  @default(false)
+  view_p      Int      @default(0)
   authorId    String
-  author      User    @relation(fields: [authorId], references: [id])
+  author      User     @relation(fields: [authorId], references: [id])
+  @@map("post")
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-
-  refresh_token      String?
-  access_token       String?
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -80,22 +63,41 @@ model VerificationRequest {
 }
 
 model Image {
-  id       String @default(cuid()) @id
-  publicId String @unique
-  format   String?
-  version  Int
-  url      String
+  id        String   @id @default(cuid())
+  publicId  String   @unique
+  format    String?
+  userId    String   @unique
   createdAt DateTime @default(now())
-  userId   String @unique
-
-  user User @relation(fields: [userId], references: [id])
+  url       String
+  version   Int
+  user      User     @relation(fields: [userId], references: [id])
+  @@map("image")
 }
 
 model Message {
   id        String   @id @default(cuid())
   content   String
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
   @@map("message")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model User {
+  id            String    @id
+  name          String?   @unique
+  email         String?   @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime
+  accounts      Account[]
+  customImage   Image?
+  posts         Post[]
+  sessions      Session[]
+  messages      Message[]
+  @@map("user")
 }
