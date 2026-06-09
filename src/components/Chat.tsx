@@ -1,6 +1,6 @@
 'use client';
 
-import { useQueryData } from '@/hooks/useQueryData';
+import { useQueryData } from '@/hooks/useQueryDataMessage';
 import { useRealTimeChat } from '@/hooks/useRealtimeChat';
 import { useSession } from 'next-auth/react';
 import React from 'react';
@@ -8,14 +8,19 @@ import React from 'react';
 export const Chat = () => {
 	const { data: session } = useSession();
 	const { messages, sendMessages, isConnected } = useRealTimeChat('teste-room');
-	const { newMessages } = useQueryData();
+	const { newMessages, handleDatabaseMessasge } = useQueryData();
 	const cachedMessages = React.useMemo(() => {
 		const mergedMessages = [...(newMessages ?? []), ...messages];
 		return mergedMessages;
 	}, [messages, newMessages]);
 	const [content, setContent] = React.useState('');
-
 	if (!isConnected) return <p>Connection failed</p>;
+
+	function handleMessage(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+		e.preventDefault();
+		sendMessages(content, session?.user.name ?? 'Anonymous');
+		if (session) handleDatabaseMessasge(content);
+	}
 
 	return (
 		<div>
@@ -35,14 +40,7 @@ export const Chat = () => {
 				className="border"
 				type="text"
 			/>
-			<button
-				onClick={(e) => {
-					e.preventDefault();
-					sendMessages(content, session?.user.name ?? 'Anonymous');
-				}}
-			>
-				Butao
-			</button>
+			<button onClick={handleMessage}>Butao</button>
 		</div>
 	);
 };

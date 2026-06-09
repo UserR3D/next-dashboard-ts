@@ -86,14 +86,14 @@ model Message {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model User {
-  id            String    @id
+  id            String    @id @default(cuid())
   name          String?   @unique
   email         String?   @unique
   password      String?
   emailVerified DateTime?
   image         String?
   createdAt     DateTime  @default(now())
-  updatedAt     DateTime
+  updatedAt     DateTime  @updatedAt
   accounts      Account[]
   customImage   Image?
   posts         Post[]

@@ -18,5 +18,16 @@ export const useQueryData = () => {
 		}
 		storedMessages();
 	}, []);
-	return { newMessages };
+
+	async function handleDatabaseMessasge(content: string) {
+		const response = await fetch('/api/messages/', {
+			method: 'POST',
+			body: JSON.stringify({
+				content,
+			}),
+			headers: { 'Content-Type': 'application/json' },
+		});
+		return response;
+	}
+	return { newMessages, handleDatabaseMessasge };
 };
