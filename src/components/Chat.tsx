@@ -14,12 +14,15 @@ export const Chat = () => {
 		return mergedMessages;
 	}, [messages, newMessages]);
 	const [content, setContent] = React.useState('');
+
 	if (!isConnected) return <p>Connection failed</p>;
 
 	function handleMessage(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		e.preventDefault();
+		if (!content.trim()) return null;
 		sendMessages(content, session?.user.name ?? 'Anonymous');
-		if (session) handleDatabaseMessasge(content);
+		// if (session) handleDatabaseMessasge(content);
+		setContent('');
 	}
 
 	return (
@@ -29,8 +32,8 @@ export const Chat = () => {
 				return (
 					<ul key={index}>
 						<li>{message.content}</li>
+						<li>{message.user.name}</li>
 						<li>{message.id}</li>
-						<li></li>
 					</ul>
 				);
 			})}
@@ -39,8 +42,9 @@ export const Chat = () => {
 				onChange={(e) => setContent(e.target.value)}
 				className="border"
 				type="text"
+				value={content}
 			/>
-			<button onClick={handleMessage}>Butao</button>
+			<button onClick={handleMessage}>Button</button>
 		</div>
 	);
 };
