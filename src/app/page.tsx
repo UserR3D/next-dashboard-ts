@@ -1,11 +1,13 @@
 'use server';
 
-import { Chat } from '@/components/Chat';
+import { RealTimeChat } from '@/components/RealTimeChat';
+import Link from 'next/link';
 
 export default async function Home() {
 	return (
 		<main>
-			<Chat />
+			<RealTimeChat />
+			<Link href={'/dashboard'}>DashBoard</Link>
 		</main>
 	);
 }

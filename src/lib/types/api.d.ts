@@ -20,3 +20,14 @@ interface ErrorApi {
 interface RouteParams {
 	params: Promise<{ id: string }>;
 }
+
+type NullAble<T> = null | T;
+
+interface ChatMessage {
+	id: string;
+	content: string;
+	user: {
+		name: string;
+	};
+	createdAt: string;
+}

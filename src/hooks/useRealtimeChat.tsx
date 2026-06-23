@@ -1,15 +1,6 @@
 import { createClient } from '@/lib/supabase/client';
 import React from 'react';
 
-export interface ChatMessage {
-	id: string;
-	content: string;
-	user: {
-		name: string;
-	};
-	createdAt: string;
-}
-
 const EVENT_MESSAGE_TYPE = 'message';
 const supabase = createClient();
 export const useRealTimeChat = (roomName: string) => {
@@ -24,7 +15,6 @@ export const useRealTimeChat = (roomName: string) => {
 				private: true,
 			},
 		});
-
 		newChannel
 			.on('broadcast', { event: EVENT_MESSAGE_TYPE }, (payload) => {
 				setMessages((current) => [...current, payload.payload as ChatMessage]);

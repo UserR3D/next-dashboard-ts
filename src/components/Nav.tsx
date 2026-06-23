@@ -1,61 +1,67 @@
 'use client';
 
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const Nav = () => {
 	const { data: session } = useSession();
-
 	return (
-		<nav className="grid justify-right">
+		<nav>
 			{!session ? (
-				<ul className="flex ">
+				<ul
+					className="nav-space p-4
+					[&>li]:px-4 [&>li]:py-2 [&>li]:rounded-lg [&>li]:hover:bg-gray-800 [&>li]:transition"
+				>
 					<li>
-						<a href="/users/register">Register</a>
+						<Link href={'/auth/register'}>Register</Link>
 					</li>
 					<li>
-						<a
-							href="#"
-							className="px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition"
-							onClick={(e) => {
-								e.preventDefault();
-								signIn();
-							}}
-						>
-							Login
-						</a>
+						<Link href={'/auth/login'}>Login</Link>
 					</li>
 				</ul>
 			) : (
-				<ul className="flex">
+				<ul className="nav-space items-center group/user p-4">
 					<li>
-						<h2>{session.user.name}</h2>
+						<h4>{session.user.name}</h4>
 					</li>
 					{session.user.image ? (
 						<li>
-							<Image
-								alt="User profile"
-								src={session.user.image}
-								width={60}
-								height={60}
-								loading="eager"
-								style={{ width: 'auto', height: 'auto' }}
-							/>
+							<ul className="bg-white relative">
+								<li>
+									<Image
+										alt="User profile"
+										src={session.user.image}
+										width={40}
+										height={40}
+										loading="eager"
+									/>
+									<ul
+										className="mt-2 -left-21 opacity-0 invisible absolute p-2 bg-red-500 border-x-2 border-b-2 rounded-b-lg border-red-800
+										group-hover/user:visible group-hover/user:opacity-100 transition delay-100
+										[&>li]:hover:bg-gray-800 [&>li]:p-4 [&>li]:rounded-lg [&>li]:transition"
+									>
+										<li>
+											<Link href={''}>Posts</Link>
+										</li>
+										<li>
+											<Link href={''}>FriendList</Link>
+										</li>
+										<li>
+											<Link
+												href={'/'}
+												onClick={() => {
+													signOut();
+												}}
+											>
+												LogOut
+											</Link>
+										</li>
+									</ul>
+								</li>
+							</ul>
 						</li>
-					) : (
-						''
-					)}
-					<li>
-						<a
-							onClick={(e) => {
-								e.preventDefault();
-								signOut();
-							}}
-							className="px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition"
-						>
-							LogOut
-						</a>
-					</li>
+					) : null}
 				</ul>
 			)}
 		</nav>
