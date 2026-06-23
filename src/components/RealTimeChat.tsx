@@ -25,32 +25,34 @@ export const RealTimeChat = () => {
 	}
 
 	return (
-		<div className="container-xs text-white h-[400px] scroll-smooth border rounded-xl overflow-hidden overflow-y-auto">
+		<div className="container-xs border-2 ">
 			{cachedMessages.length === 0 ? <div>No messages found yet</div> : null}
-			{cachedMessages.map((message) => {
-				return (
-					<ul className="p-2" key={message.id}>
-						<li className="flex justify-center gap-6">
-							<p className="font-semibold border-b border-dotted">
-								{message.user.name}
-							</p>
-							<p>
-								{new Date(message.createdAt).toLocaleString('USA', {
-									day: '2-digit',
-									month: '2-digit',
-									year: 'numeric',
-									hour: '2-digit',
-									minute: '2-digit',
-								})}
-							</p>
-						</li>
-						<li className="mt-2 bg-green-500 rounded-xl inline-block p-2">
-							<p>{message.content}</p>
-						</li>
-					</ul>
-				);
-			})}
-			<form className="mt-6 p-4 flex justify-center gap-4">
+			<div className="text-white max-h-[600px] scroll-smooth rounded-xl overflow-hidden overflow-y-auto">
+				{cachedMessages.map((message) => {
+					return (
+						<ul className="p-2" key={message.id}>
+							<li className="flex justify-center gap-6">
+								<p className="font-semibold border-b border-dotted">
+									{message.user.name}
+								</p>
+								<p>
+									{new Date(message.createdAt).toLocaleString('USA', {
+										day: '2-digit',
+										month: '2-digit',
+										year: 'numeric',
+										hour: '2-digit',
+										minute: '2-digit',
+									})}
+								</p>
+							</li>
+							<li className="mt-2 bg-green-500 rounded-xl inline-block p-2">
+								<p>{message.content}</p>
+							</li>
+						</ul>
+					);
+				})}
+			</div>
+			<form className="mt-6 p-4 border-t flex justify-center gap-4">
 				<input
 					onChange={(e) => setContent(e.target.value)}
 					className="flex-1 border rounded-md"
