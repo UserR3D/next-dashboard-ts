@@ -10,9 +10,8 @@ export const Nav = () => {
 		<nav>
 			{!session ? (
 				<ul
-					className="nav-space
-					[&>li]:px-4 [&>li]:py-2 [&>li]:rounded-lg [&>li]:hover:bg-gray-800 [&>li]:transition
-				"
+					className="nav-space p-4
+					[&>li]:px-4 [&>li]:py-2 [&>li]:rounded-lg [&>li]:hover:bg-gray-800 [&>li]:transition"
 				>
 					<li>
 						<Link href={'/auth/register'}>Register</Link>
@@ -22,16 +21,13 @@ export const Nav = () => {
 					</li>
 				</ul>
 			) : (
-				<ul className="nav-space items-center">
+				<ul className="nav-space items-center group/user p-4">
 					<li>
 						<h4>{session.user.name}</h4>
 					</li>
 					{session.user.image ? (
 						<li>
-							<ul
-								className="group/user bg-white relative 
-								before:absolute before:h-[100px] before:w-[100px] before:-left-2"
-							>
+							<ul className="bg-white relative">
 								<li>
 									<Image
 										alt="User profile"
