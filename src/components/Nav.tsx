@@ -37,7 +37,7 @@ export const Nav = () => {
 										loading="eager"
 									/>
 									<ul
-										className="mt-2 -left-21 opacity-0 invisible absolute p-2 bg-red-500 border-x-2 border-b-2 rounded-b-lg border-red-800
+										className="z-999 mt-2 -left-21 opacity-0 invisible absolute p-2 bg-red-500 border-x-2 border-b-2 rounded-b-lg border-red-800
 										group-hover/user:visible group-hover/user:opacity-100 transition delay-100
 										[&>li]:hover:bg-gray-800 [&>li]:p-4 [&>li]:rounded-lg [&>li]:transition"
 									>
