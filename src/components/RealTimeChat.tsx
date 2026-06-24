@@ -16,6 +16,7 @@ export const RealTimeChat = () => {
 	}, [messages, newMessages]);
 	const messagesElement = React.useRef<HTMLDivElement>(null);
 	const [content, setContent] = React.useState('');
+	const [isInScreen, setIsInScreen] = React.useState(false);
 
 	function handleMessage(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 		e.preventDefault();
@@ -29,6 +30,11 @@ export const RealTimeChat = () => {
 		if (messagesElement.current) {
 			scrollToMove.scrollToBottom();
 		}
+	}
+
+	function handleScroll(e: React.UIEvent<HTMLDivElement>) {
+		const scrollToMove = new scrollAdjust(undefined, e);
+		setIsInScreen(scrollToMove.halvedScroll());
 	}
 
 	React.useEffect(() => {
@@ -45,12 +51,15 @@ export const RealTimeChat = () => {
 		<div className="container-xs border-2 ">
 			{cachedMessages.length === 0 ? <div>No messages found yet</div> : null}
 			<div
+				onScroll={handleScroll}
 				ref={messagesElement}
 				className="relative text-white max-h-[600px] scroll-smooth rounded-xl break-all overflow-hidden overflow-y-auto"
 			>
-				<button onClick={scrollBottom} className="sticky top-10">
-					La pra baixo
-				</button>
+				{isInScreen ? (
+					<button onClick={scrollBottom} className="sticky top-10">
+						La pra baixo
+					</button>
+				) : null}
 
 				{cachedMessages.map((message) => {
 					return (
